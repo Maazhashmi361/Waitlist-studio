@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Waitlist Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=Sora:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#12141a;--mut:#5b6272;--line:#e1e4ea;--brand:#2540f5;--onbrand:#fff;--field:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--card:#171a21;--ink:#eef0f4;--mut:#9aa2b3;--line:#272c37;--brand:#6b7dff;--onbrand:#0b0d12;--field:#0f1115;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1115;--card:#171a21;--ink:#eef0f4;--mut:#9aa2b3;--line:#272c37;--brand:#6b7dff;--onbrand:#0b0d12;--field:#0f1115;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.app{max-width:1180px;margin:0 auto;padding:18px 18px 40px}
+header{display:flex;align-items:center;gap:10px;padding:6px 0 22px;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:700;font-size:18px}
+.mark{width:22px;height:22px;border-radius:6px;background:var(--brand);position:relative}
+.mark:after{content:"";position:absolute;left:5px;right:5px;bottom:5px;height:5px;border-radius:2px;background:var(--onbrand)}
+.grid{display:grid;gap:18px}
+@media(min-width:980px){.grid{grid-template-columns:400px 1fr;align-items:start}.stage{position:sticky;top:18px}}
+.panel,.stage{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+h1,h2{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.02em}
+h1{font-size:30px;line-height:1.08;font-weight:800}
+h2{font-size:19px;font-weight:700}
+.lead{color:var(--mut);margin:10px 0 22px}
+.field{margin-bottom:14px}
+label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.hint{font-weight:400;color:var(--mut)}
+input,textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+textarea{resize:vertical;min-height:72px}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.primary{width:100%;font:inherit;font-weight:600;font-size:16px;padding:14px;border:0;border-radius:12px;background:var(--brand);color:var(--onbrand);cursor:pointer;margin-top:6px}
+.primary:disabled{opacity:.6;cursor:wait}
+#status{font-size:14px;color:var(--mut);margin-top:12px;min-height:21px}
+#status.err{color:#c0392b}
+.stagehead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.cap{font-size:13px;color:var(--mut)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:3px}
+.seg button{font:inherit;font-size:14px;font-weight:600;border:0;background:none;color:var(--mut);padding:8px 14px;border-radius:8px;cursor:pointer}
+.seg button[aria-checked="true"]{background:var(--card);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.sw{display:flex;gap:8px;align-items:center}
+.sw button{width:26px;height:26px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.sw button[aria-checked="true"]{box-shadow:0 0 0 2px var(--ink)}
+.sw input{width:30px;height:30px;padding:0;border:0;background:none;cursor:pointer}
+.edit{display:grid;gap:8px;margin-bottom:14px}
+@media(min-width:640px){.edit{grid-template-columns:1.3fr 1.6fr .8fr}}
+.edit input{padding:9px 11px;font-size:15px}
+.frame{width:100%;height:min(68vh,660px);border:1px solid var(--line);border-radius:14px;background:#fff;display:block}
+.ghost{font:inherit;font-weight:600;font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="app">
+<header><span class="mark"></span>Waitlist Studio</header>
+<div class="grid">
+<section class="panel">
+<h1>Describe your idea. Get a page that collects signups.</h1>
+<p class="lead">Answer four questions. The copy is written and the page is designed for you to preview in seconds.</p>
+<div class="field"><label for="name">Startup name</label><input id="name" placeholder="Fieldnote" autocomplete="off"></div>
+<div class="field"><label for="idea">What does it do?</label><textarea id="idea" placeholder="Turns voice memos from the job site into daily reports."></textarea></div>
+<div class="field"><label for="who">Who is it for?</label><input id="who" placeholder="Small construction crews" autocomplete="off"></div>
+<div class="field"><label for="problem">What problem does it solve?</label><textarea id="problem" placeholder="Site managers lose hours every week writing reports from memory."></textarea></div>
+<div class="field"><label for="edge">What makes it better? <span class="hint">Optional, one per line</span></label><textarea id="edge" placeholder="Works offline&#10;Reports ready to send to clients"></textarea></div>
+<button id="gen" class="primary">Generate page</button>
+<p id="status" role="status"></p>
+</section>
+<section class="stage">
+<div class="stagehead"><h2>Your page</h2><span class="cap" id="cap">Example preview</span></div>
+<div class="row">
+<div class="seg" role="radiogroup" aria-label="Template" id="tpls">
+<button role="radio" data-t="studio">Studio</button><button role="radio" data-t="night">Night</button><button role="radio" data-t="block">Block</button>
+</div>
+<div class="sw" id="sw" role="radiogroup" aria-label="Accent color"></div>
+<button class="ghost" id="dl" hidden>Download HTML</button>
+</div>
+<div class="edit">
+<input id="e-h" aria-label="Headline" placeholder="Headline">
+<input id="e-s" aria-label="Subheading" placeholder="Subheading">
+<input id="e-c" aria-label="Button text" placeholder="Button text">
+</div>
+<iframe id="frame" class="frame" title="Page preview" sandbox="allow-scripts"></iframe>
+</section>
+</div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const FONTS='https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=Sora:wght@400;600&display=swap';
+const COLORS=['#2540F5','#0F766E','#E11D48','#F59E0B','#111827','#7C3AED'];
+const EXAMPLE={name:'Fieldnote',headline:'Site notes that write themselves',sub:'Fieldnote turns voice memos from the job site into tidy daily reports for small construction crews.',cta:'Join the waitlist',benefits:[{t:'Talk, don’t type',d:'Record a 30-second memo and get a formatted daily report.'},{t:'Built for crews',d:'Share one report with the client and the whole team.'},{t:'Fewer disputes',d:'A dated record of what was done, and when.'}]};
+let S={tpl:'studio',accent:COLORS[0],copy:EXAMPLE,example:true,slug:'example'};
+
+function onCol(h){const n=parseInt(h.slice(1),16);return (0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))>160?'#0b0b0b':'#ffffff'}
+
+const BASE="*{box-sizing:border-box;margin:0}body{font-family:'Instrument Sans',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.05;letter-spacing:-.02em}form{display:flex;gap:8px;flex-wrap:wrap}input{font:inherit;font-size:16px;padding:14px 16px;border-radius:10px;flex:1 1 220px;min-width:0;border:1px solid}button{font:inherit;font-weight:600;padding:14px 20px;border-radius:10px;border:0;cursor:pointer;background:var(--a);color:var(--on)}";
+const CSS={
+studio:"body{background:#fff;color:#14161b}.n{display:flex;justify-content:space-between;align-items:center;padding:22px 6vw;font-weight:600}.n a{color:#14161b;text-decoration:underline;text-decoration-color:var(--a);text-underline-offset:4px;font-size:14px}main{padding:7vh 6vw 6vh;max-width:940px}h1{font-size:clamp(40px,8vw,76px);font-weight:800;max-width:16ch}.s{font-size:19px;color:#4a5060;max-width:46ch;margin:20px 0 32px}input{border-color:#d5d9e0;background:#fff;color:#14161b}.note{font-size:13px;color:#7a8190;margin-top:12px}.l{margin-top:9vh;border-top:1px solid #e3e6ec}.r{display:grid;gap:6px;padding:22px 0;border-bottom:1px solid #e3e6ec}@media(min-width:640px){.r{grid-template-columns:1fr 1.6fr;gap:32px}}.r h3{font-size:22px}.r p{color:#4a5060}footer{padding:28px 6vw;font-size:13px;color:#7a8190}",
+night:"body{background:#0d1017;color:#eceff5;font-family:Sora,system-ui,sans-serif}h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-.03em}.n{padding:22px 6vw;text-align:center;font-weight:600;color:#9aa3b5}main{text-align:center;padding:8vh 6vw 6vh;max-width:980px;margin:0 auto}h1{font-size:clamp(32px,6.5vw,60px);line-height:1.1;margin:0 auto;max-width:18ch}.s{color:#9aa3b5;font-size:16px;max-width:48ch;margin:22px auto 32px}form{justify-content:center;max-width:520px;margin:0 auto}input{background:#171b24;border-color:#2a3040;color:#eceff5}.note{font-size:13px;color:#6b7488;margin-top:12px}.l{display:grid;gap:14px;margin-top:9vh;text-align:left}@media(min-width:720px){.l{grid-template-columns:repeat(3,1fr)}}.r{border:1px solid #232938;border-top:3px solid var(--a);border-radius:14px;padding:22px}.r h3{font-size:17px;margin-bottom:8px}.r p{color:#9aa3b5;font-size:15px}footer{padding:28px 6vw;font-size:13px;color:#6b7488;text-align:center}",
+block:"body{background:#fff;color:#14161b}.top{background:var(--a);color:var(--on);padding:0 6vw 9vh}.n{padding:22px 0;font-weight:700}h1{font-size:clamp(44px,11vw,104px);font-weight:800;line-height:.95;max-width:12ch;margin-top:6vh}.s{font-size:19px;max-width:44ch;margin:22px 0 30px;opacity:.92}.top form{background:#fff;padding:8px;border-radius:14px;max-width:520px}.top input{border:0;color:#14161b}.top button{background:#14161b;color:#fff}.note{font-size:13px;margin-top:12px;opacity:.85}.l{display:grid;gap:28px;padding:8vh 6vw}@media(min-width:720px){.l{grid-template-columns:repeat(3,1fr)}}.r h3{font-size:22px;margin-bottom:8px}.r h3:before{content:'';display:inline-block;width:12px;height:12px;background:var(--a);margin-right:10px;border-radius:3px}.r p{color:#4a5060}footer{padding:0 6vw 28px;font-size:13px;color:#7a8190}"
+};
+function page(c,tpl,a,live){
+ const nm=esc(c.name),b=c.benefits.map(x=>`<div class="r"><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p></div>`).join('');
+ const form=`<form id="join"><input type="email" required placeholder="you@company.com" aria-label="Email address"><button>${esc(c.cta)}</button></form><p class="note">One email when it’s ready. No spam.</p>`;
+ const hero=`<h1>${esc(c.headline)}</h1><p class="s">${esc(c.sub)}</p>${form}`;
+ let body;
+ if(tpl==='block') body=`<div class="top"><div class="n">${nm}</div>${hero}</div><section class="l">${b}</section><footer>© ${nm}</footer>`;
+ else if(tpl==='night') body=`<div class="n">${nm}</div><main>${hero}<section class="l">${b}</section></main><footer>© ${nm}</footer>`;
+ else body=`<div class="n"><span>${nm}</span><a href="#join">${esc(c.cta)}</a></div><main>${hero}<section class="l">${b}</section></main><footer>© ${nm}</footer>`;
+ return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${nm}</title><link href="${FONTS}" rel="stylesheet"><style>:root{--a:${a};--on:${onCol(a)}}${BASE}${CSS[tpl]}</style></head><body>${body}<script>var E='${live?location.origin+'/api/signup?slug='+S.slug:''}';document.querySelectorAll('form').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();var b=f.querySelector('button'),i=f.querySelector('input');if(!E){b.textContent='You’re on the list';i.value='';return}b.disabled=true;fetch(E,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:i.value})}).then(function(r){b.textContent=r.ok?'You’re on the list':'Try again';if(r.ok)i.value=''}).catch(function(){b.textContent='Try again'}).then(function(){b.disabled=false})})})<\/script></body></html>`;
+}
+
+function read(){const v=id=>$('#'+id).value.trim();return {name:v('name'),idea:v('idea'),who:v('who'),problem:v('problem'),edge:v('edge')}}
+function setStatus(t,err){const s=$('#status');s.textContent=t;s.className=err?'err':''}
+
+function fallback(f){
+ const first=f.idea.replace(/\s+/g,' ').replace(/[.!?]+$/,'');
+ const lines=f.edge.split('\n').map(s=>s.trim()).filter(Boolean);
+ const bs=[{t:'Made for '+f.who,d:first+'.'},{t:'Solves a real problem',d:f.problem},{t:'Early access',d:'Join the waitlist to be first in line when '+f.name+' opens.'}];
+ lines.slice(0,3).forEach((l,i)=>{bs[i]={t:l.split(/[.:]/)[0].slice(0,34),d:l}});
+ return {name:f.name,headline:first.length>64?f.name:first,sub:f.name+' is for '+f.who+'. '+f.problem,cta:'Join the waitlist',benefits:bs};
+}
+function prompt(f){
+ return `You write landing page copy for an early-stage startup waitlist page. Return ONLY JSON in this shape: {"headline":string,"sub":string,"cta":string,"benefits":[{"t":string,"d":string},{"t":string,"d":string},{"t":string,"d":string}]}
+Rules: headline max 9 words and names the outcome for the customer. No buzzwords (revolutionary, seamless, supercharge, unlock, game-changing, cutting-edge). sub is one or two plain sentences, max 28 words, saying what it is and who it is for. cta is 2 to 4 words and an action. Each benefit has a title of max 4 words and a description of max 16 words, and each covers a different customer outcome. Use ONLY the facts below: never invent statistics, customer counts, awards or features. Sentence case. Use the ’ character for apostrophes.
+Startup name: ${f.name}
+What it does: ${f.idea}
+Who it is for: ${f.who}
+Problem it solves: ${f.problem}
+What makes it better: ${f.edge||'(not given, infer carefully from the above)'}`;
+}
+const ok=(r)=>r&&typeof r.headline==='string'&&typeof r.sub==='string'&&typeof r.cta==='string'&&Array.isArray(r.benefits)&&r.benefits.length>=3&&r.benefits.slice(0,3).every(x=>x&&typeof x.t==='string'&&typeof x.d==='string');
+
+async function generate(){
+ const f=read();
+ if(!f.name||!f.idea||!f.who||!f.problem){setStatus('Fill in the first four fields to generate your page.',1);return}
+ const btn=$('#gen');btn.disabled=true;setStatus('Writing your copy…');
+ let copy,basic=false;
+ try{
+  const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt(f)})});
+  if(!res.ok)throw new Error('api');
+  const r=await res.json();
+  if(!ok(r))throw new Error('bad shape');
+  copy={name:f.name,headline:r.headline,sub:r.sub,cta:r.cta,benefits:r.benefits.slice(0,3)};
+ }catch(e){copy=fallback(f);basic=true}
+ S.copy=copy;S.example=false;S.slug=(f.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'page')+'-'+Math.random().toString(36).slice(2,6);
+ syncEdit();render();
+ btn.disabled=false;
+ setStatus(basic?'The AI isn’t reachable right now, so this is basic copy built from your answers. Edit it on the right.':'Done. Edit anything on the right, or try another template.');
+ $('.stage').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function syncEdit(){$('#e-h').value=S.copy.headline;$('#e-s').value=S.copy.sub;$('#e-c').value=S.copy.cta}
+function render(){
+ $('#frame').srcdoc=page(S.copy,S.tpl,S.accent);
+ document.querySelectorAll('#tpls button').forEach(b=>b.setAttribute('aria-checked',b.dataset.t===S.tpl));
+ document.querySelectorAll('#sw button').forEach(b=>b.setAttribute('aria-checked',b.dataset.c===S.accent));
+ $('#cap').textContent=S.example?'Example preview':S.copy.name+' · id '+S.slug;
+}
+let tm;function later(){clearTimeout(tm);tm=setTimeout(render,250)}
+
+document.querySelectorAll('#tpls button').forEach(b=>b.onclick=()=>{S.tpl=b.dataset.t;render()});
+const sw=$('#sw');
+COLORS.forEach(c=>{const b=document.createElement('button');b.dataset.c=c;b.role='radio';b.setAttribute('aria-label','Accent '+c);b.style.background=c;b.onclick=()=>{S.accent=c;render()};sw.appendChild(b)});
+const pick=document.createElement('input');pick.type='color';pick.value=S.accent;pick.setAttribute('aria-label','Custom accent color');pick.oninput=()=>{S.accent=pick.value.toUpperCase();render()};sw.appendChild(pick);
+[['e-h','headline'],['e-s','sub'],['e-c','cta']].forEach(([id,k])=>$('#'+id).addEventListener('input',e=>{S.copy[k]=e.target.value;if(S.copy===EXAMPLE){}later()}));
+$('#gen').onclick=generate;
+$('#dl').onclick=()=>{const html=page(S.copy,S.tpl,S.accent,true);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download=S.slug+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$('#dl').hidden=false;
+syncEdit();render();
+</script>
+</body>
+</html>
